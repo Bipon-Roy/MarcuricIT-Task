@@ -62,14 +62,8 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
 
     return (
         <>
-            <div className="mt-2">
-                <h3 className="fw-bold" style={{ marginBottom: "1rem" }}>
-                    Payroll Items
-                </h3>
-                <h4 className="fw-bolder">Dashboard / Payroll Items</h4>
-            </div>
             {/* Table rendering code */}
-            <div className="bg-white p-3 rounded-1 shadow-sm ">
+            <div className="bg-white p-3 rounded-1 shadow-sm mt-5">
                 <Table striped responsive className="table-nowrap table-centered mt-4 fw-bold">
                     {/* Table Heading */}
                     <thead className="bg-white">

@@ -83,7 +83,7 @@ const VectorMaps = React.lazy(() => import("../pages/maps/VectorMaps"));
 
 const EmployeeSalary = React.lazy(() => import("../pages/AssignedTask/EmployeeSalary"));
 const Payslip = React.lazy(() => import("../pages/AssignedTask/Payslip"));
-const PayrollItem = React.lazy(() => import("../pages/AssignedTask/PayrollItems"));
+const PayrollItem = React.lazy(() => import("../pages/AssignedTask/PayrollItems/PayrollTab"));
 
 export interface RoutesProps {
     path: RouteProps["path"];

@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/1989.0669bc39.chunk.css","mappings":"AAAA,oCACI,YAEI,gBAAiB,CADjB,eAEJ,CACJ","sources":["components/Task/Payslip/payslip.css"],"sourcesContent":["@media screen and (max-width: 576px) {\r\n    .icon-image {\r\n        max-width: 120px;\r\n        max-height: 150px;\r\n    }\r\n}\r\n"],"names":[],"sourceRoot":""}

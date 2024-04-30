@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PayrollTable from "../../components/Task/Payroll-Items/PayrollTable";
+import PayrollTable from "../../../components/Task/Payroll-Items/PayrollTable";
 import { Modal, Button, Form } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -74,7 +74,7 @@ const PayrollItems = () => {
 
             <Button
                 style={{
-                    top: "6rem",
+                    top: "1.5rem",
                     right: "1.6rem",
                 }}
                 variant="warning"
