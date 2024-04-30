@@ -11,6 +11,7 @@ interface FormData {
 }
 
 const PayrollItems = () => {
+    //states declarations with dummy data
     const [showModal, setShowModal] = useState(false);
     const {
         register,
@@ -33,7 +34,7 @@ const PayrollItems = () => {
             unitAmount: "15",
         },
     ]);
-
+    //Handle Modal Open & Close
     const handleModalClose = () => {
         setShowModal(false);
     };
@@ -42,11 +43,16 @@ const PayrollItems = () => {
         setShowModal(true);
     };
 
+    //Add new row data
+    //Note: On reload it will get back to its initial state
     const handleAddDeduction = handleSubmit((data) => {
         setTableData([...tableData, data]);
         reset();
         setShowModal(false);
     });
+
+    //updated edited value if fields are not empty on each row data
+    //Note: On reload it will get back to its initial state
 
     const handleEdit = (index: number, updatedRow: FormData) => {
         const updatedTableData = [...tableData];
@@ -54,6 +60,8 @@ const PayrollItems = () => {
         setTableData(updatedTableData);
     };
 
+    //delete a row data
+    //Note: On reload it will get back to its initial state
     const handleRemove = (index: number) => {
         const updatedTableData = tableData.filter((_, i) => i !== index);
         setTableData(updatedTableData);
@@ -61,6 +69,7 @@ const PayrollItems = () => {
 
     return (
         <div className="position-relative">
+            {/* rendering the table */}
             <PayrollTable tableRows={tableData} onEdit={handleEdit} onRemove={handleRemove} />
 
             <Button
@@ -75,7 +84,7 @@ const PayrollItems = () => {
                 <FaPlus size={18} />
                 Add Deduction
             </Button>
-
+            {/* Modal Setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Deduction</Modal.Title>

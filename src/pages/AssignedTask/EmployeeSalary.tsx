@@ -15,6 +15,7 @@ interface FormData {
 }
 
 const EmployeeSalary = () => {
+    //states declarations with dummy data
     const [showModal, setShowModal] = useState(false);
     const {
         register,
@@ -58,6 +59,7 @@ const EmployeeSalary = () => {
         },
     ]);
 
+    //Handle Modal Open & Close
     const handleModalClose = () => {
         setShowModal(false);
     };
@@ -66,18 +68,24 @@ const EmployeeSalary = () => {
         setShowModal(true);
     };
 
+    //Add new row data
+    //Note: On reload it will get back to its initial state
     const handleAddDeduction = handleSubmit((data) => {
         setTableData([...tableData, data]);
         reset();
         setShowModal(false);
     });
 
+    //updated edited value if fields are not empty on each row data
+    //Note: On reload it will get back to its initial state
     const handleEdit = (index: number, updatedRow: FormData) => {
         const updatedTableData = [...tableData];
         updatedTableData[index] = updatedRow;
         setTableData(updatedTableData);
     };
 
+    //delete a row data
+    //Note: On reload it will get back to its initial state
     const handleRemove = (index: number) => {
         const updatedTableData = tableData.filter((_, i) => i !== index);
         setTableData(updatedTableData);
@@ -85,12 +93,14 @@ const EmployeeSalary = () => {
 
     return (
         <div className="position-relative">
+            {/* rendering the table */}
             <EmployeeSalaryTable
                 tableRows={tableData}
                 onEdit={handleEdit}
                 onRemove={handleRemove}
             />
 
+            {/* Add Button */}
             <Button
                 style={{
                     top: "6rem",
@@ -104,6 +114,7 @@ const EmployeeSalary = () => {
                 Add Employee
             </Button>
 
+            {/* Modal Setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Deduction</Modal.Title>
@@ -168,13 +179,18 @@ const EmployeeSalary = () => {
 
                         <div className="mb-3">
                             <Form.Label htmlFor="role">Role</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <Form.Select
                                 id="role"
                                 {...register("role", { required: "Role is required" })}
                                 isInvalid={!!errors.role}
                                 isValid={!!watch("role") && !errors.role}
-                            />
+                            >
+                                <option value="">Select Role</option>
+                                <option value="Software Engineer">Software Engineer</option>
+                                <option value="Software Tester">Software Tester</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="UI/UX Developer">UI/UX Developer</option>
+                            </Form.Select>
                             <Form.Control.Feedback type="invalid">
                                 {errors.role && errors.role.message}
                             </Form.Control.Feedback>

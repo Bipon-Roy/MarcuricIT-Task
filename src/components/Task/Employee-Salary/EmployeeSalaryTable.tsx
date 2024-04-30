@@ -1,8 +1,11 @@
+//the component is a child component which invoked by PayrollItems from '/pages/AssignTask'
+
 import { useState } from "react";
 import { Dropdown, Table, Modal, Button, Form } from "react-bootstrap";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
 
+// Type declaration
 interface RowDataType {
     name: string;
     employeeId: string;
@@ -19,6 +22,7 @@ interface EmployeeData {
 }
 
 const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
+    //states declaration
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
     const [editedRow, setEditedRow] = useState<RowDataType>({
@@ -29,7 +33,9 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
         role: "",
         salary: 0,
     });
+    const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+    //edit button functionality
     const handleEditClick = (index: number) => {
         const selectedRow = tableRows[index];
         setEditedRow(selectedRow);
@@ -38,13 +44,46 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
     };
 
     const handleEditSave = () => {
-        if (selectedRowIndex !== null) {
+        //showing validation error
+        const errors: Record<string, string> = {};
+        let hasError = false;
+
+        // Validate each field
+        if (!editedRow.name.trim()) {
+            errors.name = "Name is required";
+            hasError = true;
+        }
+        if (!editedRow.employeeId.trim()) {
+            errors.employeeId = "Employee ID is required";
+            hasError = true;
+        }
+        if (!editedRow.email.trim()) {
+            errors.email = "Email is required";
+            hasError = true;
+        }
+        if (!editedRow.role.trim()) {
+            errors.role = "Role is required";
+            hasError = true;
+        }
+        if (editedRow.salary <= 0) {
+            errors.salary = "Salary must be greater than zero";
+            hasError = true;
+        }
+
+        // Update validation errors value
+        setValidationErrors(errors);
+
+        //updated edited value if fields are not empty on each row data
+        //Note: On reload it will get back to its initial state
+        if (!hasError && selectedRowIndex !== null) {
             onEdit(selectedRowIndex, editedRow);
             setShowEditModal(false);
             setSelectedRowIndex(null);
         }
     };
 
+    //delete a row data
+    //Note: On reload it will get back to its initial state
     const handleRemoveClick = (index: number) => {
         onRemove(index);
     };
@@ -57,9 +96,10 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                 </h3>
                 <h4 className="fw-bolder">Dashboard / Salary</h4>
             </div>
-
+            {/* Table rendering code */}
             <div className="bg-white p-3 rounded-1 shadow-sm ">
                 <Table striped responsive className="table-nowrap table-centered mt-4 fw-bold">
+                    {/* Table Heading */}
                     <thead className="bg-white">
                         <tr>
                             <th className="border-0 ">Name</th>
@@ -71,6 +111,8 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                             <th className="border-0">Action</th>
                         </tr>
                     </thead>
+                    {/* Table Body */}
+
                     <tbody className="fw-bolder">
                         {(tableRows || []).map((row, index) => {
                             return (
@@ -138,6 +180,7 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                 </div>
             </div>
 
+            {/* Modal Setup*/}
             <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Employee</Modal.Title>
@@ -152,7 +195,11 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                                 onChange={(e) =>
                                     setEditedRow({ ...editedRow, name: e.target.value })
                                 }
+                                isInvalid={!!validationErrors.name}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {validationErrors.name}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Employee ID</Form.Label>
@@ -162,7 +209,11 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                                 onChange={(e) =>
                                     setEditedRow({ ...editedRow, employeeId: e.target.value })
                                 }
+                                isInvalid={!!validationErrors.employeeId}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {validationErrors.employeeId}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Email</Form.Label>
@@ -172,17 +223,31 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                                 onChange={(e) =>
                                     setEditedRow({ ...editedRow, email: e.target.value })
                                 }
+                                isInvalid={!!validationErrors.email}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {validationErrors.email}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Role</Form.Label>
                             <Form.Control
-                                type="text"
+                                as="select"
                                 value={editedRow.role}
                                 onChange={(e) =>
                                     setEditedRow({ ...editedRow, role: e.target.value })
                                 }
-                            />
+                                isInvalid={!!validationErrors.role}
+                            >
+                                <option value="">Select Role</option>
+                                <option value="Software Engineer">Software Engineer</option>
+                                <option value="Software Tester">Software Tester</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="UI/UX Developer">UI/UX Developer</option>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                                {validationErrors.role}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Salary</Form.Label>
@@ -192,7 +257,11 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                                 onChange={(e) =>
                                     setEditedRow({ ...editedRow, salary: Number(e.target.value) })
                                 }
+                                isInvalid={!!validationErrors.salary}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {validationErrors.salary}
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

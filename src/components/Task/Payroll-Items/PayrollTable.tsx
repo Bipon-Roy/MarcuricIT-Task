@@ -1,4 +1,4 @@
-//the component is a child component which invoked by PayrollItems from '/pages/AssignTask'
+//the component is a child component which invoked by EmployeeSalary from '/pages/AssignTask'
 
 import { useState } from "react";
 import { Dropdown, Table, Modal, Button, Form } from "react-bootstrap";
@@ -11,7 +11,6 @@ interface RowDataType {
     unitAmount: string;
 }
 
-//type declaration
 interface PayrollTableData {
     tableRows: RowDataType[];
     onEdit: (index: number, updatedRow: RowDataType) => void;
@@ -19,12 +18,14 @@ interface PayrollTableData {
 }
 
 const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
+    //states declaration
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
     const [editedName, setEditedName] = useState<string>("");
     const [editedUnitAmount, setEditedUnitAmount] = useState<string>("");
+    const [errors, setErrors] = useState<Partial<RowDataType>>({});
 
-    //edit functionality on each row data
+    //edit button functionality
     const handleEditClick = (index: number) => {
         const selectedRow = tableRows[index];
         setEditedName(selectedRow.name);
@@ -33,18 +34,28 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
         setShowEditModal(true);
     };
 
-    //updated edited value functionality on each row data
-    //Note: On reload it will get back to its initial state
     const handleEditSave = () => {
+        //showing validation error
+        if (!editedName || !editedUnitAmount) {
+            setErrors({
+                name: !editedName ? "Name is required" : "",
+                unitAmount: !editedUnitAmount ? "Unit Amount is required" : "",
+            });
+            return;
+        }
+        //updated edited value if fields are not empty on each row data
+        //Note: On reload it will get back to its initial state
         if (selectedRowIndex !== null) {
             const updatedRow = { name: editedName, unitAmount: editedUnitAmount };
             onEdit(selectedRowIndex, updatedRow);
             setShowEditModal(false);
             setSelectedRowIndex(null);
+            setErrors({});
         }
     };
 
-    // remove row data
+    //delete a row data
+    //Note: On reload it will get back to its initial state
     const handleRemoveClick = (index: number) => {
         onRemove(index);
     };
@@ -57,9 +68,10 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
                 </h3>
                 <h4 className="fw-bolder">Dashboard / Payroll Items</h4>
             </div>
-
+            {/* Table rendering code */}
             <div className="bg-white p-3 rounded-1 shadow-sm ">
                 <Table striped responsive className="table-nowrap table-centered mt-4 fw-bold">
+                    {/* Table Heading */}
                     <thead className="bg-white">
                         <tr>
                             <th className="border-0 ">Name</th>
@@ -67,6 +79,7 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
                             <th className="border-0">Action</th>
                         </tr>
                     </thead>
+                    {/* Table Body */}
                     <tbody className="fw-bolder ">
                         {(tableRows || []).map((row, index) => {
                             return (
@@ -115,9 +128,11 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
                 </div>
             </div>
 
+            {/* Modal Setup*/}
+
             <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Item</Modal.Title>
+                    <Modal.Title>Edit Payroll</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -127,7 +142,11 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
                                 type="text"
                                 value={editedName}
                                 onChange={(e) => setEditedName(e.target.value)}
+                                isInvalid={!!errors.name}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.name}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Unit Amount</Form.Label>
@@ -135,7 +154,11 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
                                 type="number"
                                 value={editedUnitAmount}
                                 onChange={(e) => setEditedUnitAmount(e.target.value)}
+                                isInvalid={!!errors.unitAmount}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.unitAmount}
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
