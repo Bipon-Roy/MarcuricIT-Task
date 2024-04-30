@@ -64,7 +64,7 @@ const PayrollTable = ({ tableRows, onEdit, onRemove }: PayrollTableData) => {
         <>
             {/* Table rendering code */}
             <div className="bg-white p-3 rounded-1 shadow-sm mt-5">
-                <Table striped responsive className="table-nowrap table-centered mt-4 fw-bold">
+                <Table responsive className="table-nowrap table-centered mt-4 fw-bold">
                     {/* Table Heading */}
                     <thead className="bg-white">
                         <tr>
