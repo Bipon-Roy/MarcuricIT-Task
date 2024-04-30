@@ -6,8 +6,12 @@ import { payrollDeductions, payrollOvertime, payrollAdditions } from "../data";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
+import AddAdditionForm from "./AddAdditionForm";
+import AddOvertimeForm from "./AddOvertimeForm";
+import AddDeductionsForm from "./AddDeductionsForm";
 
+//table columns for additions tab
 const additionColumns = [
     {
         Header: "Name",
@@ -24,7 +28,13 @@ const additionColumns = [
         accessor: "unit",
         sort: false,
     },
+    {
+        Header: "Action",
+        accessor: "action",
+        sort: false,
+    },
 ];
+//table columns for overtime tab
 const overTimeColumns = [
     {
         Header: "Name",
@@ -36,8 +46,13 @@ const overTimeColumns = [
         accessor: "rate",
         sort: true,
     },
+    {
+        Header: "Action",
+        accessor: "action",
+        sort: false,
+    },
 ];
-
+//table columns for deduction tab
 const deductionsColumns = [
     {
         Header: "Name",
@@ -49,8 +64,14 @@ const deductionsColumns = [
         accessor: "unitAmount",
         sort: false,
     },
+    {
+        Header: "Action",
+        accessor: "action",
+        sort: false,
+    },
 ];
 
+//pagination options for additions tab
 const additionPerPageList = [
     {
         text: "5",
@@ -69,6 +90,7 @@ const additionPerPageList = [
         value: payrollAdditions.length,
     },
 ];
+//pagination options for overtime tab
 const overtimePerPageList = [
     {
         text: "5",
@@ -87,6 +109,8 @@ const overtimePerPageList = [
         value: payrollOvertime.length,
     },
 ];
+
+//pagination options for deduction tab
 const deductionPerPageList = [
     {
         text: "5",
@@ -108,9 +132,47 @@ const deductionPerPageList = [
 
 const PayrollTable = () => {
     const tabs = ["Additions", "Overtime", "Deductions"];
-    const initialIndex = tabs.indexOf("Additions"); // Corrected the initialIndex assignment
+    const initialIndex = tabs.indexOf("Additions"); // the initialIndex assignment
     const [tabIndex, setTabIndex] = useState(initialIndex);
-
+    const [showModal, setShowModal] = useState(false); // State to manage modal (Additions) visibility
+    const [showOvertimeModal, setShowOvertimeModal] = useState(false); // State to manage modal (Overtime) visibility
+    const [showDeductionModal, setShowDeductionModal] = useState(false); // State to manage modal (Deductions) visibility
+    //generate action button
+    const generateActionButton = () => (
+        <Dropdown>
+            <Dropdown.Toggle
+                as="a"
+                className="cursor-pointer table-action-btn btn btn-light btn-xs"
+            >
+                <HiDotsVertical size={15} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu align="start">
+                <Dropdown.Item className="d-flex align-items-center gap-1">
+                    <MdEdit size={15} />
+                    Edit
+                </Dropdown.Item>
+                <Dropdown.Item className="d-flex align-items-center gap-1">
+                    <MdDelete size={15} />
+                    Remove
+                </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    );
+    // Modify the Additions data to include payslip and action property
+    const payrollAdditionsWithActions = payrollAdditions.map((items) => ({
+        ...items,
+        action: generateActionButton(),
+    }));
+    // Modify the employee data to include payslip and action property
+    const payrollOvertimeWithActions = payrollOvertime.map((items) => ({
+        ...items,
+        action: generateActionButton(),
+    }));
+    // Modify the employee data to include payslip and action property
+    const payrollDeductionsWithActions = payrollDeductions.map((items) => ({
+        ...items,
+        action: generateActionButton(),
+    }));
     return (
         <>
             <div className="mt-2">
@@ -135,6 +197,7 @@ const PayrollTable = () => {
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
                                 <Button
+                                    onClick={() => setShowModal(true)} // Add onClick event to open modal
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
@@ -144,7 +207,7 @@ const PayrollTable = () => {
                             </div>
                             <Table
                                 columns={additionColumns}
-                                data={payrollAdditions} // Use modified employee data with payslip property
+                                data={payrollAdditionsWithActions} // Use modified addition data with payslip property
                                 pageSize={5}
                                 sizePerPageList={additionPerPageList}
                                 isSortable={true}
@@ -158,7 +221,9 @@ const PayrollTable = () => {
                         <TabPanel>
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
+
                                 <Button
+                                    onClick={() => setShowOvertimeModal(true)} // Add onClick event to open modal
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
@@ -168,7 +233,7 @@ const PayrollTable = () => {
                             </div>
                             <Table
                                 columns={overTimeColumns}
-                                data={payrollOvertime} // Use modified employee data with payslip property
+                                data={payrollOvertimeWithActions} // Use modified overtime data with payslip property
                                 pageSize={5}
                                 sizePerPageList={overtimePerPageList}
                                 isSortable={true}
@@ -183,8 +248,9 @@ const PayrollTable = () => {
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
                                 <Button
+                                    onClick={() => setShowDeductionModal(true)}
                                     variant="warning"
-                                    className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill mt-1"
+                                    className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
                                     <FaPlus size={18} />
                                     Add Deductions
@@ -192,7 +258,7 @@ const PayrollTable = () => {
                             </div>
                             <Table
                                 columns={deductionsColumns}
-                                data={payrollDeductions} // Use modified employee data with payslip property
+                                data={payrollDeductionsWithActions} // Use modified deductions data with payslip property
                                 pageSize={5}
                                 sizePerPageList={deductionPerPageList}
                                 isSortable={true}
@@ -203,6 +269,14 @@ const PayrollTable = () => {
                     </div>
                 </Tabs>
             </div>
+
+            {/* Render the AddAdditionForm modal component */}
+            <AddAdditionForm showModal={showModal} setShowModal={setShowModal} />
+            <AddOvertimeForm showModal={showOvertimeModal} setShowModal={setShowOvertimeModal} />
+            <AddDeductionsForm
+                showModal={showDeductionModal}
+                setShowModal={setShowDeductionModal}
+            />
         </>
     );
 };

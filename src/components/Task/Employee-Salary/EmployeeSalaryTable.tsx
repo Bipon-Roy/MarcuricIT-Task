@@ -8,6 +8,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 
+//table columns
 const columns = [
     {
         Header: "Name",
@@ -59,7 +60,7 @@ interface FormData {
     role: string;
     salary: number;
 }
-
+// generating navigation link button
 const generatePayslipButton = () => (
     <Link to="/task/Payslip">
         <Button
@@ -74,6 +75,7 @@ const generatePayslipButton = () => (
     </Link>
 );
 
+//pagination options for additions tab
 const sizePerPageList = [
     {
         text: "5",
@@ -171,6 +173,7 @@ const EmployeeSalaryTable = () => {
                     isSearchable={true}
                 />
             </div>
+            {/* modal setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Deduction</Modal.Title>
