@@ -17,7 +17,7 @@ const additionColumns = [
     },
     {
         Header: "Default/Unit Amount",
-        accessor: "unitAmount",
+        accessor: "unit",
         sort: false,
     },
 ];

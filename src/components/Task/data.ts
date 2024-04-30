@@ -4,7 +4,7 @@ interface EmployeeSalary {
     email: string;
     joinDate: string;
     role: string;
-    salary: number;
+    salary: string;
 }
 interface PayrollDeductions {
     name: string;
@@ -27,7 +27,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "johndoe@example.com",
         joinDate: "1 Jan 2023",
         role: "Android Developer",
-        salary: 1000,
+        salary: "$1000",
     },
     {
         name: "Mary Smith",
@@ -35,7 +35,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "marysmith@example.com",
         joinDate: "15 Feb 2022",
         role: "iOS Developer",
-        salary: 1200,
+        salary: "$1200",
     },
     {
         name: "Alex Johnson",
@@ -43,7 +43,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "alexjohnson@example.com",
         joinDate: "10 Mar 2021",
         role: "Web Developer",
-        salary: 1100,
+        salary: "$1100",
     },
     {
         name: "Emily Brown",
@@ -51,7 +51,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "emilybrown@example.com",
         joinDate: "5 Apr 2020",
         role: "UI/UX Designer",
-        salary: 1300,
+        salary: "$1300",
     },
     {
         name: "John Smith",
@@ -59,7 +59,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "johnsmith@example.com",
         joinDate: "20 May 2019",
         role: "Software Engineer",
-        salary: 1500,
+        salary: "$1500",
     },
     {
         name: "Jessica Lee",
@@ -67,7 +67,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "jessicalee@example.com",
         joinDate: "25 Jun 2018",
         role: "Data Analyst",
-        salary: 1400,
+        salary: "$1400",
     },
     {
         name: "David Wilson",
@@ -75,7 +75,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "davidwilson@example.com",
         joinDate: "30 Jul 2017",
         role: "DevOps Engineer",
-        salary: 1600,
+        salary: "$1600",
     },
     {
         name: "Sophia Miller",
@@ -83,7 +83,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "sophiamiller@example.com",
         joinDate: "3 Aug 2016",
         role: "Quality Assurance Engineer",
-        salary: 1700,
+        salary: "$1700",
     },
     {
         name: "Michael Brown",
@@ -91,7 +91,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "michaelbrown@example.com",
         joinDate: "8 Sep 2015",
         role: "Project Manager",
-        salary: 1800,
+        salary: "$1800",
     },
     {
         name: "Emma Wilson",
@@ -99,7 +99,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "emmawilson@example.com",
         joinDate: "13 Oct 2014",
         role: "Technical Writer",
-        salary: 1900,
+        salary: "$1900",
     },
     {
         name: "William Taylor",
@@ -107,7 +107,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "williamtaylor@example.com",
         joinDate: "18 Nov 2013",
         role: "Systems Administrator",
-        salary: 2000,
+        salary: "$2000",
     },
     {
         name: "Olivia Anderson",
@@ -115,7 +115,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "oliviaanderson@example.com",
         joinDate: "23 Dec 2012",
         role: "Network Engineer",
-        salary: 2100,
+        salary: "$2100",
     },
     {
         name: "Daniel Martinez",
@@ -123,7 +123,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "danielmartinez@example.com",
         joinDate: "28 Jan 2012",
         role: "Database Administrator",
-        salary: 2200,
+        salary: "$2200",
     },
     {
         name: "Ava Hernandez",
@@ -131,7 +131,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "avahernandez@example.com",
         joinDate: "2 Feb 2011",
         role: "UI/UX Designer",
-        salary: 2300,
+        salary: "$2300",
     },
     {
         name: "James Gonzalez",
@@ -139,7 +139,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "jamesgonzalez@example.com",
         joinDate: "7 Mar 2010",
         role: "Web Developer",
-        salary: 2400,
+        salary: "$2400",
     },
     {
         name: "Sophia Perez",
@@ -147,7 +147,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "sophiaperez@example.com",
         joinDate: "12 Apr 2009",
         role: "iOS Developer",
-        salary: 2500,
+        salary: "$2500",
     },
     {
         name: "Liam Torres",
@@ -155,7 +155,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "liamtorres@example.com",
         joinDate: "17 May 2008",
         role: "Android Developer",
-        salary: 2600,
+        salary: "$2600",
     },
     {
         name: "Isabella Ramirez",
@@ -163,7 +163,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "isabellaramirez@example.com",
         joinDate: "22 Jun 2007",
         role: "Software Engineer",
-        salary: 2700,
+        salary: "$2700",
     },
     {
         name: "Logan Cruz",
@@ -171,7 +171,7 @@ const employeeSalary: EmployeeSalary[] = [
         email: "logancruz@example.com",
         joinDate: "27 Jul 2006",
         role: "Data Analyst",
-        salary: 2800,
+        salary: "$2800",
     },
     {
         name: "Mia Scott",
@@ -179,196 +179,196 @@ const employeeSalary: EmployeeSalary[] = [
         email: "miascott@example.com",
         joinDate: "1 Aug 2005",
         role: "DevOps Engineer",
-        salary: 2900,
+        salary: "$2900",
     },
 ];
 
 const payrollDeductions: PayrollDeductions[] = [
     {
         name: "Absent amount",
-        unitAmount: "10",
+        unitAmount: "$10",
     },
     {
         name: "Advance",
-        unitAmount: "20",
+        unitAmount: "$20",
     },
     {
         name: "Unpaid leave",
-        unitAmount: "15",
+        unitAmount: "$15",
     },
     {
         name: "Overtime Penalty",
-        unitAmount: "30",
+        unitAmount: "$30",
     },
     {
         name: "Health Insurance Premium",
-        unitAmount: "50",
+        unitAmount: "$50",
     },
     {
         name: "Income Tax",
-        unitAmount: "100",
+        unitAmount: "$100",
     },
     {
         name: "401(k) Contribution",
-        unitAmount: "75",
+        unitAmount: "$75",
     },
     {
         name: "Union Dues",
-        unitAmount: "40",
+        unitAmount: "$40",
     },
     {
         name: "Parking Fees",
-        unitAmount: "20",
+        unitAmount: "$20",
     },
     {
         name: "Uniform Expenses",
-        unitAmount: "25",
+        unitAmount: "$25",
     },
     {
         name: "Professional Development Fund",
-        unitAmount: "60",
+        unitAmount: "$60",
     },
     {
         name: "Childcare Assistance",
-        unitAmount: "35",
+        unitAmount: "$35",
     },
     {
         name: "Fitness Center Membership",
-        unitAmount: "45",
+        unitAmount: "$45",
     },
     {
         name: "Employee Assistance Program",
-        unitAmount: "55",
+        unitAmount: "$55",
     },
     {
         name: "Retirement Plan Contribution",
-        unitAmount: "80",
+        unitAmount: "$80",
     },
     {
         name: "Public Transportation Subsidy",
-        unitAmount: "30",
+        unitAmount: "$30",
     },
     {
         name: "Maternity/Paternity Leave",
-        unitAmount: "65",
+        unitAmount: "$65",
     },
     {
         name: "Employee Stock Purchase Plan",
-        unitAmount: "70",
+        unitAmount: "$70",
     },
     {
         name: "Tuition Reimbursement",
-        unitAmount: "90",
+        unitAmount: "$90",
     },
     {
         name: "Flexible Spending Account",
-        unitAmount: "40",
+        unitAmount: "$40",
     },
     {
         name: "Meal Allowance",
-        unitAmount: "25",
+        unitAmount: "$25",
     },
     {
         name: "Language Training Program",
-        unitAmount: "55",
+        unitAmount: "$55",
     },
     {
         name: "Telecommuting Allowance",
-        unitAmount: "30",
+        unitAmount: "$30",
     },
 ];
 const payrollOvertime: PayrollOvertime[] = [
     {
         name: "Normal day OT 1.5x",
-        rate: "10",
+        rate: "$10",
     },
     {
         name: "Public holiday OT 3.0x",
-        rate: "20",
+        rate: "$20",
     },
     {
         name: "Public holiday OT 3.0x",
-        rate: "15",
+        rate: "$15",
     },
     {
         name: "Weekend OT 2.0x",
-        rate: "12",
+        rate: "$12",
     },
     {
         name: "Late Night OT 2.5x",
-        rate: "18",
+        rate: "$18",
     },
     {
         name: "Emergency OT 2.0x",
-        rate: "14",
+        rate: "$14",
     },
     {
         name: "Festival OT 2.5x",
-        rate: "22",
+        rate: "$22",
     },
     {
         name: "Snow Day OT 3.0x",
-        rate: "25",
+        rate: "$25",
     },
     {
         name: "Storm OT 3.0x",
-        rate: "28",
+        rate: "$28",
     },
     {
         name: "Disaster Recovery OT 2.0x",
-        rate: "16",
+        rate: "$16",
     },
     {
         name: "Special Event OT 2.5x",
-        rate: "20",
+        rate: "$20",
     },
     {
         name: "Weekday OT 1.5x",
-        rate: "10",
+        rate: "$10",
     },
     {
         name: "Annual Meeting OT 2.0x",
-        rate: "15",
+        rate: "$15",
     },
     {
         name: "Training Session OT 1.5x",
-        rate: "10",
+        rate: "$10",
     },
     {
         name: "Project Deadline OT 2.0x",
-        rate: "18",
+        rate: "$18",
     },
     {
         name: "Team Building OT 1.5x",
-        rate: "12",
+        rate: "$12",
     },
     {
         name: "Holiday Season OT 2.5x",
-        rate: "22",
+        rate: "$22",
     },
     {
         name: "Peak Season OT 2.0x",
-        rate: "16",
+        rate: "$16",
     },
     {
         name: "Tax Season OT 2.5x",
-        rate: "20",
+        rate: "$20",
     },
     {
         name: "Product Launch OT 3.0x",
-        rate: "25",
+        rate: "$25",
     },
     {
         name: "System Upgrade OT 2.0x",
-        rate: "14",
+        rate: "$14",
     },
     {
         name: "Security Breach OT 3.0x",
-        rate: "30",
+        rate: "$30",
     },
     {
         name: "Client Visit OT 2.5x",
-        rate: "18",
+        rate: "$18",
     },
 ];
 
