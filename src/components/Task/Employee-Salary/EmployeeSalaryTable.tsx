@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Dropdown, Table, Modal, Button, Form } from "react-bootstrap";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
-
+import { Link } from "react-router-dom";
+import avatar from "../../../assets/images/users/avatar-1.jpg";
 // Type declaration
 interface RowDataType {
     name: string;
@@ -117,21 +118,36 @@ const EmployeeSalaryTable = ({ tableRows, onEdit, onRemove }: EmployeeData) => {
                         {(tableRows || []).map((row, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{row.name}</td>
+                                    <td>
+                                        <div className="d-flex align-items-center  gap-2 ">
+                                            <img
+                                                style={{
+                                                    width: "60px",
+                                                    height: "60px",
+                                                }}
+                                                className="rounded-pill"
+                                                src={avatar}
+                                                alt="User"
+                                            />
+                                            {row.name}
+                                        </div>
+                                    </td>
                                     <td>{row.employeeId}</td>
                                     <td>{row.email}</td>
                                     <td>{row.role}</td>
                                     <td>${row.salary}</td>
                                     <td>
-                                        <Button
-                                            style={{
-                                                borderRadius: "3rem",
-                                            }}
-                                            variant="warning"
-                                            className="fw-bold"
-                                        >
-                                            Generate Slip
-                                        </Button>
+                                        <Link to="/task/Payslip">
+                                            <Button
+                                                style={{
+                                                    borderRadius: "3rem",
+                                                }}
+                                                variant="warning"
+                                                className="fw-bold"
+                                            >
+                                                Generate Slip
+                                            </Button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <Dropdown>

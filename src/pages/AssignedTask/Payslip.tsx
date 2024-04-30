@@ -1,5 +1,11 @@
+import PayslipInfo from "../../components/Task/Payslip/PayslipInfo";
+
 const Payslip = () => {
-    return <div>Payslip</div>;
+    return (
+        <div>
+            <PayslipInfo />
+        </div>
+    );
 };
 
 export default Payslip;
