@@ -161,7 +161,7 @@ const EmployeeSalaryTable = () => {
                     onClick={handleAddEmployee}
                 >
                     <FaPlus size={18} />
-                    Add Employee
+                    Add Salary
                 </Button>
             </div>
 

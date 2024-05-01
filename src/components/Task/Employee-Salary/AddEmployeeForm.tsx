@@ -56,7 +56,7 @@ const AddEmployeeForm = ({ showModal, setShowModal, isEditForm, editEmployeeData
             {/* modal setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{isEditForm ? "Edit Employee" : "Add Employee"}</Modal.Title>
+                    <Modal.Title>{isEditForm ? "Edit Salary" : "Add Salary"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -105,7 +105,7 @@ const AddEmployeeForm = ({ showModal, setShowModal, isEditForm, editEmployeeData
                         <div className="mb-3">
                             <Form.Label htmlFor="joinDate">Join Date</Form.Label>
                             <Form.Control
-                                type="date"
+                                type="text"
                                 id="joinDate"
                                 {...register("joinDate", { required: "Join Date is required" })}
                                 isInvalid={!!errors.joinDate}
