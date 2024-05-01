@@ -24,17 +24,17 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }
         handleSubmit,
         watch,
         setValue,
+        reset,
     } = useForm<FormData>();
 
     //Handle Modal Open & Close
     const handleModalClose = () => {
+        reset();
         setShowModal(false);
     };
 
     useEffect(() => {
         if (isEditForm && editEmployeeData) {
-            console.log(editEmployeeData);
-
             // Set initial form values based on editEmployeeData
             setValue("name", editEmployeeData.name);
             setValue("employeeId", editEmployeeData.employeeId);
