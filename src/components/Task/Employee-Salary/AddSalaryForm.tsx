@@ -1,11 +1,7 @@
 import { Modal, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-interface Props {
-    showModal: boolean;
-    isEditForm: boolean;
-    setShowModal: Function;
-}
 // Type declaration
 interface FormData {
     name: string;
@@ -13,14 +9,21 @@ interface FormData {
     email: string;
     joinDate: string;
     role: string;
-    salary: number;
+    salary: string;
 }
-const AddSalaryForm = ({ showModal, setShowModal, isEditForm }: Props) => {
+interface Props {
+    showModal: boolean;
+    isEditForm: boolean;
+    setShowModal: Function;
+    editEmployeeData: FormData;
+}
+const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }: Props) => {
     const {
         register,
         formState: { errors },
         handleSubmit,
         watch,
+        setValue,
     } = useForm<FormData>();
 
     //Handle Modal Open & Close
@@ -28,14 +31,30 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm }: Props) => {
         setShowModal(false);
     };
 
+    useEffect(() => {
+        if (isEditForm && editEmployeeData) {
+            console.log(editEmployeeData);
+
+            // Set initial form values based on editEmployeeData
+            setValue("name", editEmployeeData.name);
+            setValue("employeeId", editEmployeeData.employeeId);
+            setValue("email", editEmployeeData.email);
+            setValue("joinDate", editEmployeeData.joinDate);
+            setValue("role", editEmployeeData.role);
+            setValue("salary", editEmployeeData.salary);
+        }
+    }, [isEditForm, editEmployeeData, setValue]);
+
     // Handle form submission
-    const onSubmit = (data: FormData) => {};
+    const onSubmit = (data: FormData) => {
+        console.log(data); // You can perform form submission logic here
+    };
     return (
         <>
             {/* modal setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{isEditForm ? "Edit Salary" : "Add Salary"}</Modal.Title>
+                    <Modal.Title>{isEditForm ? "Edit Employee" : "Add Employee"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -104,10 +123,18 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm }: Props) => {
                                 isValid={!!watch("role") && !errors.role}
                             >
                                 <option value="">Select Role</option>
+                                <option value="Android Developer">Android Developer</option>
+                                <option value="iOS Developer">iOS Developer</option>
+                                <option value="Web Developer">Web Developer</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
                                 <option value="Software Engineer">Software Engineer</option>
-                                <option value="Software Tester">Software Tester</option>
-                                <option value="Frontend Developer">Frontend Developer</option>
-                                <option value="UI/UX Developer">UI/UX Developer</option>
+                                <option value="Data Analyst">Data Analyst</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Quality Assurance Engineer">
+                                    Quality Assurance Engineer
+                                </option>
+                                <option value="Project Manager">Project Manager</option>
+                                <option value="Technical Writer">Technical Writer</option>
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
                                 {errors.role && errors.role.message}
@@ -117,7 +144,7 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm }: Props) => {
                         <div className="mb-3">
                             <Form.Label htmlFor="salary">Salary</Form.Label>
                             <Form.Control
-                                type="number"
+                                type="text"
                                 id="salary"
                                 {...register("salary", { required: "Salary is required" })}
                                 isInvalid={!!errors.salary}

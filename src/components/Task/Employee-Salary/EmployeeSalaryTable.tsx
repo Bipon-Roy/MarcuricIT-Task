@@ -8,6 +8,14 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import AddSalaryForm from "./AddSalaryForm";
 
+interface Employee {
+    name: string;
+    employeeId: string;
+    email: string;
+    joinDate: string;
+    role: string;
+    salary: string;
+}
 //table columns
 const columns = [
     {
@@ -90,13 +98,15 @@ const sizePerPageList = [
 const EmployeeSalaryTable = () => {
     const [showModal, setShowModal] = useState(false);
     const [isEditForm, setIsEditForm] = useState(false);
+    const [editEmployeeData, setEditEmployeeData] = useState<Employee | null>(null);
 
-    const handleModalOpen = () => {
+    const handleModalOpen = (employeeData: Employee) => {
         setIsEditForm(true);
         setShowModal(true);
+        setEditEmployeeData(employeeData);
     };
     //generate action button
-    const generateActionButton = () => (
+    const generateActionButton = (employee: Employee) => (
         <Dropdown>
             <Dropdown.Toggle
                 as="a"
@@ -107,7 +117,7 @@ const EmployeeSalaryTable = () => {
             <Dropdown.Menu align="start">
                 <Dropdown.Item
                     className="d-flex align-items-center gap-1"
-                    onClick={handleModalOpen}
+                    onClick={() => handleModalOpen(employee)}
                 >
                     <MdEdit size={15} />
                     Edit
@@ -123,7 +133,7 @@ const EmployeeSalaryTable = () => {
     const employeeDataWithPayslip = employeeSalary.map((employee) => ({
         ...employee,
         payslip: generatePayslipButton(),
-        action: generateActionButton(),
+        action: generateActionButton(employee),
     }));
 
     return (
@@ -161,6 +171,7 @@ const EmployeeSalaryTable = () => {
                 showModal={showModal}
                 setShowModal={setShowModal}
                 isEditForm={isEditForm}
+                editEmployeeData={editEmployeeData!}
             />
         </>
     );
