@@ -100,11 +100,20 @@ const EmployeeSalaryTable = () => {
     const [isEditForm, setIsEditForm] = useState(false);
     const [editEmployeeData, setEditEmployeeData] = useState<Employee | null>(null);
 
+    // Handle modal open for editing a new employee
     const handleModalOpen = (employeeData: Employee) => {
         setIsEditForm(true);
         setShowModal(true);
         setEditEmployeeData(employeeData);
     };
+
+    // Handle modal open for adding a new employee
+    const handleAddEmployee = () => {
+        setIsEditForm(false); // Reset isEditForm to false
+        setShowModal(true);
+        setEditEmployeeData(null);
+    };
+
     //generate action button
     const generateActionButton = (employee: Employee) => (
         <Dropdown>
@@ -149,7 +158,7 @@ const EmployeeSalaryTable = () => {
                 <Button
                     variant="warning"
                     className="fw-bold d-flex align-items-center gap-1 text-white rounded-pill "
-                    onClick={() => setShowModal(true)}
+                    onClick={handleAddEmployee}
                 >
                     <FaPlus size={18} />
                     Add Employee

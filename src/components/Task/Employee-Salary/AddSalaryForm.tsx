@@ -42,13 +42,17 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }
             setValue("joinDate", editEmployeeData.joinDate);
             setValue("role", editEmployeeData.role);
             setValue("salary", editEmployeeData.salary);
+        } else {
+            // If not editing, reset the form values
+            reset();
         }
-    }, [isEditForm, editEmployeeData, setValue]);
+    }, [isEditForm, editEmployeeData, setValue, reset]);
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
         console.log(data); // You can perform form submission logic here
     };
+
     return (
         <>
             {/* modal setup */}
