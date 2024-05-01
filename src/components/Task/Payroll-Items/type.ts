@@ -9,5 +9,5 @@ export interface Overtime {
 }
 export interface Deductions {
     name: string;
-    unit: string;
+    unitAmount: string;
 }

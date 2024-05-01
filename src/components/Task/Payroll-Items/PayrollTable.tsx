@@ -172,6 +172,20 @@ const PayrollTable = () => {
         setEditOvertimeData(null);
     };
 
+    // handle edit button modal on overtime tab
+    const handleEditDeductions = (deductionData: Deductions) => {
+        setIsEditForm(true);
+        setShowDeductionModal(true);
+        setEditDeductionData(deductionData);
+    };
+
+    // handle add addition button modal on overtime tab
+    const handleAddDeductions = () => {
+        setIsEditForm(false); // Reset isEditForm to false
+        setShowDeductionModal(true);
+        setEditDeductionData(null);
+    };
+
     //generate action button for Additions tab
     const generateActionButton = (data: Addition) => (
         <Dropdown>
@@ -223,7 +237,7 @@ const PayrollTable = () => {
     );
 
     //generate action button for Deductions tab
-    const generateDeductionsActionButton = () => (
+    const generateDeductionsActionButton = (data: Deductions) => (
         <Dropdown>
             <Dropdown.Toggle
                 as="a"
@@ -232,7 +246,10 @@ const PayrollTable = () => {
                 <HiDotsVertical size={15} />
             </Dropdown.Toggle>
             <Dropdown.Menu align="start">
-                <Dropdown.Item className="d-flex align-items-center gap-1">
+                <Dropdown.Item
+                    className="d-flex align-items-center gap-1"
+                    onClick={() => handleEditDeductions(data)}
+                >
                     <MdEdit size={15} />
                     Edit
                 </Dropdown.Item>
@@ -257,7 +274,7 @@ const PayrollTable = () => {
     // Modify the employee data to include payslip and action property
     const payrollDeductionsWithActions = payrollDeductions.map((items) => ({
         ...items,
-        action: generateDeductionsActionButton(),
+        action: generateDeductionsActionButton(items),
     }));
     return (
         <>
@@ -334,6 +351,7 @@ const PayrollTable = () => {
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
                                 <Button
+                                    onClick={handleAddDeductions} // Add onClick event to open modal
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >

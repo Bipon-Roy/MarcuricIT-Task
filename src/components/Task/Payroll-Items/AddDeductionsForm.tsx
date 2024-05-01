@@ -2,6 +2,7 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Deductions } from "./type";
+import { useEffect } from "react";
 
 interface Props {
     showModal: boolean;
@@ -15,13 +16,24 @@ const AddDeductionsForm = ({ showModal, setShowModal, isEditForm, editDeductionD
         formState: { errors },
         handleSubmit,
         watch,
+        setValue,
+        reset,
     } = useForm<Deductions>();
 
     //Handle Modal Open & Close
     const handleModalClose = () => {
         setShowModal(false);
     };
-
+    useEffect(() => {
+        if (isEditForm && editDeductionData) {
+            // Set initial form values based on editDeductionData
+            setValue("name", editDeductionData.name);
+            setValue("unitAmount", editDeductionData.unitAmount);
+        } else {
+            // If not editing, reset the form values
+            reset();
+        }
+    }, [isEditForm, editDeductionData, setValue, reset]);
     // Handle form submission
     const onSubmit = (data: Deductions) => {};
 
@@ -51,16 +63,16 @@ const AddDeductionsForm = ({ showModal, setShowModal, isEditForm, editDeductionD
                         <div className="mb-3">
                             <Form.Label htmlFor="unit">Default/Unit Amount</Form.Label>
                             <Form.Control
-                                type="number"
-                                id="unit"
-                                {...register("unit", {
-                                    required: "Default/Unit Amount is required",
+                                type="text"
+                                id="unitAmount"
+                                {...register("unitAmount", {
+                                    required: "Default/unitAmount Amount is required",
                                 })}
-                                isInvalid={!!errors.unit}
-                                isValid={!!watch("unit") && !errors.unit}
+                                isInvalid={!!errors.unitAmount}
+                                isValid={!!watch("unitAmount") && !errors.unitAmount}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.unit && errors.unit.message}
+                                {errors.unitAmount && errors.unitAmount.message}
                             </Form.Control.Feedback>
                         </div>
 
