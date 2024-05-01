@@ -11,8 +11,9 @@ interface FormData {
 interface Props {
     showModal: boolean;
     setShowModal: Function;
+    isEditForm: boolean;
 }
-const AddOvertimeForm = ({ showModal, setShowModal }: Props) => {
+const AddOvertimeForm = ({ showModal, setShowModal, isEditForm }: Props) => {
     const {
         register,
         formState: { errors },
@@ -33,7 +34,7 @@ const AddOvertimeForm = ({ showModal, setShowModal }: Props) => {
             {/* modal setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Deduction</Modal.Title>
+                    <Modal.Title>{isEditForm ? "Edit Overtime" : "Add Overtime"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit(onSubmit)}>

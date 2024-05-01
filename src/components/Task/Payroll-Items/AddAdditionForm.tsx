@@ -10,9 +10,10 @@ interface FormData {
 }
 interface Props {
     showModal: boolean;
+    isEditForm: boolean;
     setShowModal: Function;
 }
-const AddAdditionForm = ({ showModal, setShowModal }: Props) => {
+const AddAdditionForm = ({ showModal, setShowModal, isEditForm }: Props) => {
     const {
         register,
         formState: { errors },
@@ -33,7 +34,7 @@ const AddAdditionForm = ({ showModal, setShowModal }: Props) => {
             {/* modal setup */}
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Deduction</Modal.Title>
+                    <Modal.Title>{isEditForm ? "Edit Additions" : "Add Additions"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit(onSubmit)}>

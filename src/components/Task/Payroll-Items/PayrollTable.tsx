@@ -137,7 +137,26 @@ const PayrollTable = () => {
     const [showModal, setShowModal] = useState(false); // State to manage modal (Additions) visibility
     const [showOvertimeModal, setShowOvertimeModal] = useState(false); // State to manage modal (Overtime) visibility
     const [showDeductionModal, setShowDeductionModal] = useState(false); // State to manage modal (Deductions) visibility
-    //generate action button
+
+    const [isEditForm, setIsEditForm] = useState(false);
+
+    // handle edit button modal on additions tab
+    const handleModalAdditions = () => {
+        setIsEditForm(true);
+        setShowModal(true);
+    };
+    // handle edit button modal on overtime tab
+    const handleModalOvertime = () => {
+        setIsEditForm(true);
+        setShowOvertimeModal(true);
+    };
+    // handle edit button modal on deductions tab
+    const handleModalDeductions = () => {
+        setIsEditForm(true);
+        setShowDeductionModal(true);
+    };
+
+    //generate action button for Additions tab
     const generateActionButton = () => (
         <Dropdown>
             <Dropdown.Toggle
@@ -147,7 +166,10 @@ const PayrollTable = () => {
                 <HiDotsVertical size={15} />
             </Dropdown.Toggle>
             <Dropdown.Menu align="start">
-                <Dropdown.Item className="d-flex align-items-center gap-1">
+                <Dropdown.Item
+                    className="d-flex align-items-center gap-1"
+                    onClick={handleModalAdditions}
+                >
                     <MdEdit size={15} />
                     Edit
                 </Dropdown.Item>
@@ -158,6 +180,57 @@ const PayrollTable = () => {
             </Dropdown.Menu>
         </Dropdown>
     );
+
+    //generate action button for Overtime tab
+    const generateOvertimeActionButton = () => (
+        <Dropdown>
+            <Dropdown.Toggle
+                as="a"
+                className="cursor-pointer table-action-btn btn btn-light btn-xs"
+            >
+                <HiDotsVertical size={15} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu align="start">
+                <Dropdown.Item
+                    className="d-flex align-items-center gap-1"
+                    onClick={handleModalOvertime}
+                >
+                    <MdEdit size={15} />
+                    Edit
+                </Dropdown.Item>
+                <Dropdown.Item className="d-flex align-items-center gap-1">
+                    <MdDelete size={15} />
+                    Remove
+                </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    );
+
+    //generate action button for Deductions tab
+    const generateDeductionsActionButton = () => (
+        <Dropdown>
+            <Dropdown.Toggle
+                as="a"
+                className="cursor-pointer table-action-btn btn btn-light btn-xs"
+            >
+                <HiDotsVertical size={15} />
+            </Dropdown.Toggle>
+            <Dropdown.Menu align="start">
+                <Dropdown.Item
+                    className="d-flex align-items-center gap-1"
+                    onClick={handleModalDeductions}
+                >
+                    <MdEdit size={15} />
+                    Edit
+                </Dropdown.Item>
+                <Dropdown.Item className="d-flex align-items-center gap-1">
+                    <MdDelete size={15} />
+                    Remove
+                </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    );
+
     // Modify the Additions data to include payslip and action property
     const payrollAdditionsWithActions = payrollAdditions.map((items) => ({
         ...items,
@@ -166,12 +239,12 @@ const PayrollTable = () => {
     // Modify the employee data to include payslip and action property
     const payrollOvertimeWithActions = payrollOvertime.map((items) => ({
         ...items,
-        action: generateActionButton(),
+        action: generateOvertimeActionButton(),
     }));
     // Modify the employee data to include payslip and action property
     const payrollDeductionsWithActions = payrollDeductions.map((items) => ({
         ...items,
-        action: generateActionButton(),
+        action: generateDeductionsActionButton(),
     }));
     return (
         <>
@@ -271,11 +344,20 @@ const PayrollTable = () => {
             </div>
 
             {/* Render the AddAdditionForm modal component */}
-            <AddAdditionForm showModal={showModal} setShowModal={setShowModal} />
-            <AddOvertimeForm showModal={showOvertimeModal} setShowModal={setShowOvertimeModal} />
+            <AddAdditionForm
+                showModal={showModal}
+                setShowModal={setShowModal}
+                isEditForm={isEditForm}
+            />
+            <AddOvertimeForm
+                showModal={showOvertimeModal}
+                setShowModal={setShowOvertimeModal}
+                isEditForm={isEditForm}
+            />
             <AddDeductionsForm
                 showModal={showDeductionModal}
                 setShowModal={setShowDeductionModal}
+                isEditForm={isEditForm}
             />
         </>
     );
