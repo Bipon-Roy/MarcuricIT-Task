@@ -6,7 +6,7 @@ import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import AddSalaryForm from "./AddSalaryForm";
+import AddSalaryForm from "./AddEmployeeForm";
 
 interface Employee {
     name: string;

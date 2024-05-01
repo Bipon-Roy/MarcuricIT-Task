@@ -1,33 +1,46 @@
 // AddAdditionForm Modal
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { Addition } from "./type";
+import { useEffect } from "react";
 
 // Type declaration
-interface FormData {
-    name: string;
-    category: string;
-    unit: string;
-}
+
 interface Props {
     showModal: boolean;
     isEditForm: boolean;
     setShowModal: Function;
+    editAdditionData: Addition | null;
 }
-const AddAdditionForm = ({ showModal, setShowModal, isEditForm }: Props) => {
+const AddAdditionForm = ({ showModal, setShowModal, isEditForm, editAdditionData }: Props) => {
     const {
         register,
         formState: { errors },
         handleSubmit,
         watch,
-    } = useForm<FormData>();
+        reset,
+        setValue,
+    } = useForm<Addition>();
 
     //Handle Modal Open & Close
     const handleModalClose = () => {
         setShowModal(false);
     };
 
+    useEffect(() => {
+        if (isEditForm && editAdditionData) {
+            // Set initial form values based on editAdditionData
+            setValue("name", editAdditionData.name);
+            setValue("category", editAdditionData.category);
+            setValue("unit", editAdditionData.unit);
+        } else {
+            // If not editing, reset the form values
+            reset();
+        }
+    }, [isEditForm, editAdditionData, setValue, reset]);
+
     // Handle form submission
-    const onSubmit = (data: FormData) => {};
+    const onSubmit = (data: Addition) => {};
 
     return (
         <div>
@@ -69,7 +82,7 @@ const AddAdditionForm = ({ showModal, setShowModal, isEditForm }: Props) => {
                         <div className="mb-3">
                             <Form.Label htmlFor="unit">Default/Unit Amount</Form.Label>
                             <Form.Control
-                                type="number"
+                                type="text"
                                 id="unit"
                                 {...register("unit", {
                                     required: "Default/Unit Amount is required",

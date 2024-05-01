@@ -10,6 +10,7 @@ import { Button, Dropdown } from "react-bootstrap";
 import AddAdditionForm from "./AddAdditionForm";
 import AddOvertimeForm from "./AddOvertimeForm";
 import AddDeductionsForm from "./AddDeductionsForm";
+import { Addition, Deductions, Overtime } from "./type";
 
 //table columns for additions tab
 const additionColumns = [
@@ -137,27 +138,42 @@ const PayrollTable = () => {
     const [showModal, setShowModal] = useState(false); // State to manage modal (Additions) visibility
     const [showOvertimeModal, setShowOvertimeModal] = useState(false); // State to manage modal (Overtime) visibility
     const [showDeductionModal, setShowDeductionModal] = useState(false); // State to manage modal (Deductions) visibility
-
     const [isEditForm, setIsEditForm] = useState(false);
 
+    const [editAdditionData, setEditAdditionData] = useState<Addition | null>(null); //state to pass addition data
+    const [editOvertimeData, setEditOvertimeData] = useState<Overtime | null>(null); //state to pass overtime data
+    const [editDeductionData, setEditDeductionData] = useState<Deductions | null>(null); //state to pass deduction data
+
     // handle edit button modal on additions tab
-    const handleModalAdditions = () => {
+    const handleEditAdditions = (additionData: Addition) => {
         setIsEditForm(true);
         setShowModal(true);
+        setEditAdditionData(additionData);
     };
+
+    // handle add addition button modal on additions tab
+    const handleAddAdditions = () => {
+        setIsEditForm(false); // Reset isEditForm to false
+        setShowModal(true);
+        setEditAdditionData(null);
+    };
+
     // handle edit button modal on overtime tab
-    const handleModalOvertime = () => {
+    const handleEditOvertime = (overtimeData: Overtime) => {
         setIsEditForm(true);
         setShowOvertimeModal(true);
+        setEditOvertimeData(overtimeData);
     };
-    // handle edit button modal on deductions tab
-    const handleModalDeductions = () => {
-        setIsEditForm(true);
-        setShowDeductionModal(true);
+
+    // handle add addition button modal on overtime tab
+    const handleAddOvertime = () => {
+        setIsEditForm(false); // Reset isEditForm to false
+        setShowOvertimeModal(true);
+        setEditOvertimeData(null);
     };
 
     //generate action button for Additions tab
-    const generateActionButton = () => (
+    const generateActionButton = (data: Addition) => (
         <Dropdown>
             <Dropdown.Toggle
                 as="a"
@@ -168,7 +184,7 @@ const PayrollTable = () => {
             <Dropdown.Menu align="start">
                 <Dropdown.Item
                     className="d-flex align-items-center gap-1"
-                    onClick={handleModalAdditions}
+                    onClick={() => handleEditAdditions(data)}
                 >
                     <MdEdit size={15} />
                     Edit
@@ -182,7 +198,7 @@ const PayrollTable = () => {
     );
 
     //generate action button for Overtime tab
-    const generateOvertimeActionButton = () => (
+    const generateOvertimeActionButton = (data: Overtime) => (
         <Dropdown>
             <Dropdown.Toggle
                 as="a"
@@ -193,7 +209,7 @@ const PayrollTable = () => {
             <Dropdown.Menu align="start">
                 <Dropdown.Item
                     className="d-flex align-items-center gap-1"
-                    onClick={handleModalOvertime}
+                    onClick={() => handleEditOvertime(data)}
                 >
                     <MdEdit size={15} />
                     Edit
@@ -216,10 +232,7 @@ const PayrollTable = () => {
                 <HiDotsVertical size={15} />
             </Dropdown.Toggle>
             <Dropdown.Menu align="start">
-                <Dropdown.Item
-                    className="d-flex align-items-center gap-1"
-                    onClick={handleModalDeductions}
-                >
+                <Dropdown.Item className="d-flex align-items-center gap-1">
                     <MdEdit size={15} />
                     Edit
                 </Dropdown.Item>
@@ -234,12 +247,12 @@ const PayrollTable = () => {
     // Modify the Additions data to include payslip and action property
     const payrollAdditionsWithActions = payrollAdditions.map((items) => ({
         ...items,
-        action: generateActionButton(),
+        action: generateActionButton(items),
     }));
     // Modify the employee data to include payslip and action property
     const payrollOvertimeWithActions = payrollOvertime.map((items) => ({
         ...items,
-        action: generateOvertimeActionButton(),
+        action: generateOvertimeActionButton(items),
     }));
     // Modify the employee data to include payslip and action property
     const payrollDeductionsWithActions = payrollDeductions.map((items) => ({
@@ -270,7 +283,7 @@ const PayrollTable = () => {
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
                                 <Button
-                                    onClick={() => setShowModal(true)} // Add onClick event to open modal
+                                    onClick={handleAddAdditions} // Add onClick event to open modal
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
@@ -296,7 +309,7 @@ const PayrollTable = () => {
                                 {/* Add Button */}
 
                                 <Button
-                                    onClick={() => setShowOvertimeModal(true)} // Add onClick event to open modal
+                                    onClick={handleAddOvertime} // Add onClick event to open modal
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
@@ -321,7 +334,6 @@ const PayrollTable = () => {
                             <div className="d-flex justify-content-end ">
                                 {/* Add Button */}
                                 <Button
-                                    onClick={() => setShowDeductionModal(true)}
                                     variant="warning"
                                     className="fw-bolder d-flex align-items-center gap-1 text-white rounded-pill "
                                 >
@@ -348,16 +360,19 @@ const PayrollTable = () => {
                 showModal={showModal}
                 setShowModal={setShowModal}
                 isEditForm={isEditForm}
+                editAdditionData={editAdditionData}
             />
             <AddOvertimeForm
                 showModal={showOvertimeModal}
                 setShowModal={setShowOvertimeModal}
                 isEditForm={isEditForm}
+                editOvertimeData={editOvertimeData}
             />
             <AddDeductionsForm
                 showModal={showDeductionModal}
                 setShowModal={setShowDeductionModal}
                 isEditForm={isEditForm}
+                editDeductionData={editDeductionData}
             />
         </>
     );

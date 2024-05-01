@@ -2,32 +2,42 @@
 
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { Overtime } from "./type";
+import { useEffect } from "react";
 
-// Type declaration
-interface FormData {
-    name: string;
-    rate: number;
-}
 interface Props {
     showModal: boolean;
     setShowModal: Function;
     isEditForm: boolean;
+    editOvertimeData: Overtime | null;
 }
-const AddOvertimeForm = ({ showModal, setShowModal, isEditForm }: Props) => {
+const AddOvertimeForm = ({ showModal, setShowModal, isEditForm, editOvertimeData }: Props) => {
     const {
         register,
         formState: { errors },
         handleSubmit,
         watch,
-    } = useForm<FormData>();
+        setValue,
+        reset,
+    } = useForm<Overtime>();
 
     //Handle Modal Open & Close
     const handleModalClose = () => {
         setShowModal(false);
     };
+    useEffect(() => {
+        if (isEditForm && editOvertimeData) {
+            // Set initial form values based on editOvertimeData
+            setValue("name", editOvertimeData.name);
+            setValue("rate", editOvertimeData.rate);
+        } else {
+            // If not editing, reset the form values
+            reset();
+        }
+    }, [isEditForm, editOvertimeData, setValue, reset]);
 
     // Handle form submission
-    const onSubmit = (data: FormData) => {};
+    const onSubmit = (data: Overtime) => {};
 
     return (
         <div>
@@ -55,7 +65,7 @@ const AddOvertimeForm = ({ showModal, setShowModal, isEditForm }: Props) => {
                         <div className="mb-3">
                             <Form.Label htmlFor="rate">Rate</Form.Label>
                             <Form.Control
-                                type="number"
+                                type="text"
                                 id="rate"
                                 {...register("rate", { required: "Rate is required" })}
                                 isInvalid={!!errors.rate}

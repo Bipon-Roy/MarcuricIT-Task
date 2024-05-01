@@ -17,7 +17,7 @@ interface Props {
     setShowModal: Function;
     editEmployeeData: FormData;
 }
-const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }: Props) => {
+const AddEmployeeForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }: Props) => {
     const {
         register,
         formState: { errors },
@@ -49,9 +49,7 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }
     }, [isEditForm, editEmployeeData, setValue, reset]);
 
     // Handle form submission
-    const onSubmit = (data: FormData) => {
-        console.log(data); // You can perform form submission logic here
-    };
+    const onSubmit = (data: FormData) => {};
 
     return (
         <>
@@ -174,4 +172,4 @@ const AddSalaryForm = ({ showModal, setShowModal, isEditForm, editEmployeeData }
     );
 };
 
-export default AddSalaryForm;
+export default AddEmployeeForm;

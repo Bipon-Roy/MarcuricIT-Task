@@ -1,25 +1,21 @@
 // AddDeductionsForm Modal
-
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { Deductions } from "./type";
 
-// Type declaration
-interface FormData {
-    name: string;
-    unit: number;
-}
 interface Props {
     showModal: boolean;
     setShowModal: Function;
     isEditForm: boolean;
+    editDeductionData: Deductions | null;
 }
-const AddDeductionsForm = ({ showModal, setShowModal, isEditForm }: Props) => {
+const AddDeductionsForm = ({ showModal, setShowModal, isEditForm, editDeductionData }: Props) => {
     const {
         register,
         formState: { errors },
         handleSubmit,
         watch,
-    } = useForm<FormData>();
+    } = useForm<Deductions>();
 
     //Handle Modal Open & Close
     const handleModalClose = () => {
@@ -27,7 +23,7 @@ const AddDeductionsForm = ({ showModal, setShowModal, isEditForm }: Props) => {
     };
 
     // Handle form submission
-    const onSubmit = (data: FormData) => {};
+    const onSubmit = (data: Deductions) => {};
 
     return (
         <div>
